@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Le French team endroit</title>
+    <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background-color:#4D004D;}
+    #chatCont{ display:none; width: 30%; }
+    #msgBox { background: #4d004d; padding: 3px; position: fixed; bottom: 0; width: 30%; }
+    #chatMsg { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
+    #send { width: 19%; background: #ffffff; border: none; padding: 10px; }
+    #messages { list-style-type: none; margin: 0; padding: 0; }
+    #messages li { padding: 5px 10px; font: 13px Helvetica, Arial;}
+    #messages li:nth-child(odd) { background: #eee; font: 13px Helvetica, Arial;}
+    #usersConnected{margin-left:40%; color: white; position: fixed;}
+    </style>
+  </head>
+  <body>
+
+    <div id="usernameWrapper">
+      <form id="setUsername">
+        <p id ="usernameSameErr"></p>
+          <input type="text" id ="username" size="40" placeholder ="Please enter username.">
+          <button>Enter</button>
+      </form>
+    </div>
+
+    <div id="chatCont">
+      <ul id="messages"></ul>
+      <form action="" id="msgBox">
+          <input id="chatMsg" autocomplete="off" /><button id="send">Send</button>
+      </form>
+      <div id = "usersConnected"> </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+
+    var socket = io();
+     $('#setUsername').submit(function(event){
+        event.preventDefault(); //functioned used to prevent the default action of event
+        socket.emit('new user connected', $('#username').val(), function(data){  //pass data to the server
+          if(data){
+          $('#usernameWrapper').hide('slow');
+          $('#chatCont').show('slow');
+        } else {
+          $('#usernameSameErr').html('The username has already been taken. Please choose another one.'); //if data returned from the serve is false show error
+        }
+        });
+        $('#username').val('');
+      });
+
+      socket.on('usernames', function(data){ //display users in the users div
+        var usersCon = '';
+        for(i=0; i<data.length; i++){
+          usersCon += data[i] + '</br>'
+        }
+        $('#usersConnected').html(usersCon);
+      });
+
+    $('#msgBox').submit(function(event){  //send messages
+      event.preventDefault();
+      socket.emit('chat message', $('#chatMsg').val());
+      $('#chatMsg').val('');
+      return false;
+    });
+    socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text(msg.usr +':'+ msg.line));
+    });
+
+    </script>
+  </body>
+</html>
