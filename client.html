@@ -45,7 +45,7 @@
      $('#setUsername').submit(function(event){
         event.preventDefault(); //functioned used to prevent the default action of event
         socket.emit('new user connected', $('#username').val(), function(data){  //pass data to the server
-          if(data){
+          if(data){ //if data is true hide the username div and show the chat div
           $('#usernameWrapper').hide('slow');
           $('#chatCont').show('slow');
         } else {
@@ -55,7 +55,7 @@
         $('#username').val('');
       });
 
-      socket.on('usernames', function(data){ //display users in the users div
+      socket.on('usernames', function(data){ //display users in the users div next to the chat div
         var usersCon = '';
         for(i=0; i<data.length; i++){
           usersCon += data[i] + '</br>'
@@ -64,12 +64,12 @@
       });
 
     $('#msgBox').submit(function(event){  //send messages
-      event.preventDefault();
-      socket.emit('chat message', $('#chatMsg').val());
+      event.preventDefault(); //preventDefault for the event loop to go properly
+      socket.emit('chat message', $('#chatMsg').val()); //send the message to server
       $('#chatMsg').val('');
       return false;
     });
-    socket.on('chat message', function(msg){
+    socket.on('chat message', function(msg){ //show the message in the client
       $('#messages').append($('<li>').text(msg.usr +':'+ msg.line));
     });
 
