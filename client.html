@@ -4,24 +4,28 @@
     <title>Le French team endroit</title>
     <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background-color:#4D004D;}
+    body { background-color:#000;}
     #chatCont{ display:none; width: 30%; }
-    #msgBox { background: #4d004d; padding: 3px; position: fixed; bottom: 0; width: 30%; }
+    #msgBox {padding: 3px; position: fixed; bottom: 0; width: 30%; }
     #chatMsg { border: 0; padding: 10px; width: 80%; margin-right: .5%; }
     #send { width: 19%; background: #ffffff; border: none; padding: 10px; }
-    #messages { list-style-type: none; margin: 0; padding: 0; }
-    #messages li { padding: 5px 10px; font: 13px Helvetica, Arial;}
-    #messages li:nth-child(odd) { background: #eee; font: 13px Helvetica, Arial;}
-    #usersConnected{margin-left:40%; color: white; position: fixed;}
+    #messages { background: #fff; list-style-type: none;  margin: 0; padding: 0; }
+    #messages li { padding: 5px 10px; font-family: Helvetica;}
+    #messages li:nth-child(odd) { background: #fff; font-family: Helvetica;}
+    #usersConnected{margin-left:40%; color: white; position: fixed; font-family: Helvetica;}
+    #usernameWrapper{margin-top: 25%;}
+    #button { width: 100px; height: 50px; border-radius: 8px; background-color:#000; color:white; border:none; font-size:16px;}
+    #username {height: 50px; font-size:16px; background-color:#000; border: none; color: white; border-bottom-color:white;}
+    #usernameSameErr{color:#fff; font-family:Helvetica;}
     </style>
   </head>
   <body>
-
+<center>
     <div id="usernameWrapper">
       <form id="setUsername">
         <p id ="usernameSameErr"></p>
-          <input type="text" id ="username" size="40" placeholder ="Please enter username.">
-          <button>Enter</button>
+          <input type="text" id ="username"  size="40" placeholder ="Please enter username.">
+          <button id="button">Enter</button>
       </form>
     </div>
 
