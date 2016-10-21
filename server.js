@@ -26,6 +26,7 @@ module.exports = function updateUsr() {  //createfunc for display as otherwise i
 }
  socket.on('chat message', function(msg){
     io.emit('chat message', {line: msg, usr:socket.username});
+   return array[usernames];
   });
 
 socket.on('disconnect', function(data){  //erase the name if user disconnects
