@@ -21,7 +21,7 @@ io.on('connection', function(socket){
     }
   });
 
-function updateUsr() {  //createfunc for display as otherwise it cannot be replicted
+module.exports = function updateUsr() {  //createfunc for display as otherwise it cannot be replicted
   io.emit('usernames', usernames);
 }
  socket.on('chat message', function(msg){
